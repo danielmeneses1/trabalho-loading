@@ -1,5 +1,5 @@
 import express from "express";
-import livrosRouter from "./RotaLivros.js";
+import livrosRouter from "./routs/RotaLivros.js";
 import conectaNaDatabase from "./config/dbconnect.js";
 
 const conexao = await conectaNaDatabase();
