@@ -1,5 +1,6 @@
 import express from "express";
 import livrosRouter from "./routs/RotaLivros.js";
+import usuariosRouter from "./routs/RotaUsuarios.js";
 import conectaNaDatabase from "./config/dbconnect.js";
 
 const conexao = await conectaNaDatabase();
@@ -19,6 +20,7 @@ const app = express();
 app.use(express.json());
 
 app.use("/livros", livrosRouter);
+app.use("/usuarios", usuariosRouter);
 
 export default app;
 
