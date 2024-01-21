@@ -1,4 +1,8 @@
+import { response } from "express";
 import user from "../models/user.js";
+import bcrypt from "bcrypt";
+
+// Rest of your code...
 
 class userControler{
 
@@ -12,11 +16,19 @@ class userControler{
         }
     }
 
-    static async inserirUser(req, res) {
+    static async cadastrarUser(req, res) {
         try {
             const novoUser = new user(req.body);
-            const userSalvo = await novoUser.save();
-            res.status(201).json(userSalvo);
+            novoUser.senha = await bcrypt.hash(novoUser.senha, 10);
+            await novoUser.save();
+            const response = {
+                mensagem: 'Usuário criado com sucesso',
+                usuario: {
+                    nome: req.body.nome,
+                    email: req.body.email,
+                    id: req.body.id,
+                }}
+            res.status(201).json(response);
         } catch (error) {
             console.error(error);
             res.status(500).json({ message: 'Erro ao salvar user' });
