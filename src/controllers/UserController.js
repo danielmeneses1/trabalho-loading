@@ -1,8 +1,5 @@
-import { response } from "express";
 import user from "../models/user.js";
 import bcrypt from "bcrypt";
-
-// Rest of your code...
 
 class userControler{
 
@@ -38,8 +35,8 @@ class userControler{
     static async deletarUser(req, res) {
         try {
             const id = req.params.id;
-            const userDeletado = await user.findByIdAndDelete(id);
-            res.status(200).json(userDeletado);
+            const userRemoved = await user.findByIdAndDelete(id);
+            res.status(200).json(userRemoved);
         } catch (error) {
             console.error(error);
             res.status(500).json({ message: 'Erro ao deletar user' });
