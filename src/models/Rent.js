@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 
-const vendaSchema = new mongoose.Schema({
+const rentSchema = new mongoose.Schema({
     idVenda : { type: mongoose.Schema.Types.ObjectId },
     idUsuario: {type: String, required: true},
     emailUsuario : { type: String, required: true },
@@ -8,6 +8,6 @@ const vendaSchema = new mongoose.Schema({
     nomeLivro : { type: String, required: true },
 })
 
-const venda = mongoose.model("vendas", vendaSchema);
+const rent = mongoose.model("vendas", rentSchema);
 
-export default venda;
+export default rent;

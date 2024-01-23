@@ -1,41 +1,52 @@
-import venda from "../models/venda.js";
-import jwt from "jsonwebtoken";
+import Express from "express";
+import rent from "../models/Rent.js";
+import livro from "../models/livro.js";
+const router = Express.Router();
 
 class vendaController{
-    static async listarVendas(req, res) {
+    static async listarAlugueis(req, res) {
         try {
-            const ListaVendas = await venda.find();
+            const ListaVendas = await rent.find();
             res.status(200).json(ListaVendas);
         } catch (error) {
             console.error(error);
-            res.status(500).json({ message: 'Erro ao buscar vendas' });
+            res.status(500).json({ message: 'Erro ao buscar alugueis' });
         }
     }
 
-    static async RealizarVenda(req, res) {
-        try {
-            
-            const {idUsuario, emailUsuario, idLivro, nomeLivro } = req.body;
-
-            const newVenda = new venda({ idUsuario, emailUsuario, idLivro, nomeLivro });
-            await newVenda.save();
-            const response = {
-                mensagem: 'Venda realizada com sucesso',
-                venda: {
-                    idUsuario: newVenda.idUsuario,
-                    emailUsuario: newVenda.emailUsuario,
-                    idLivro: newVenda.idLivro,
-                    nomeLivro: newVenda.nomeLivro,
-                }
-            };
-            res.status(201).json(response);
-
-            } catch (error) {
-            console.error(error);
-            res.status(500).json({ message: 'Erro ao realizar venda' });
-        }
-    }
     
-}
+        static async RealizarAluguel(req, res) {
+            try {
+                const { idUsuario, emailUsuario, idLivro, nomeLivro } = req.body;
+
+                const newRent = new rent({ idUsuario, emailUsuario, idLivro, nomeLivro });
+                await newRent.save();
+                const id = req.params.idLivro;
+                const livroDeletado = await livro.findByIdAndDelete(idLivro);
+                const response = {
+                    mensagem: 'Aluguel realizado com sucesso',
+                    AlugadoPor: {
+                        idUsuario: newRent.idUsuario,
+                        emailUsuario: newRent.emailUsuario,
+                        idLivro: newRent.idLivro,
+                        nomeLivro: newRent.nomeLivro,
+                    },
+                    livroAlugado: {
+                        id: livroDeletado.id,
+                        titulo: livroDeletado.titulo,
+                        editora: livroDeletado.editora,
+                        preco: livroDeletado.preco,
+                    }
+                };
+
+                res.status(201).json(response);
+            } catch (error) {
+                console.error(error);
+                res.status(500).json({ message: 'Erro ao realizar venda' });
+            }
+        }
+    }
+
+
 
 export default vendaController;
