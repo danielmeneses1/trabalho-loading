@@ -19,6 +19,11 @@ class rentController{
             try {
                 const { idUsuario, emailUsuario, idLivro, nomeLivro } = req.body;
 
+                const livroDisponivel = await livro.findById(idLivro);
+                if (!livroDisponivel) {
+                    return res.status(404).json({ message: 'Livro não disponível' });
+                }
+
                 const newRent = new rent({ idUsuario, emailUsuario, idLivro, nomeLivro });
                 await newRent.save();
                 const livroDeletado = await livro.findByIdAndDelete(idLivro);
