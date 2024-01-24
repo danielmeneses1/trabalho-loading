@@ -33,6 +33,31 @@ class livroControler{
         
         }
     }
+
+    static async seachBookByGender(req, res){
+        try{
+            const genero = req.params.genero;
+            const livros = await livro.find({genero: genero});
+            res.status(200).json(livros);
+        }
+        catch(error){
+            console.error(error);
+            res.status(500).json({ message: 'error when find book' });
+        }
+    }
+
+    static async searchBookById(req, res){
+        try{
+            const id = req.params.id;
+            const livroBuscado = await livro.findById(id);
+            res.status(200).json(livroBuscado);
+        }
+        catch(error){
+            console.error(error);
+            res.status(500).json({ message: 'error when find book' });
+        }
+    }
+    
 }
 
 

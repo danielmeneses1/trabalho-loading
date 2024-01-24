@@ -3,7 +3,7 @@ import rent from "../models/Rent.js";
 import livro from "../models/livro.js";
 const router = Express.Router();
 
-class vendaController{
+class rentController{
     static async listarAlugueis(req, res) {
         try {
             const ListaVendas = await rent.find();
@@ -21,7 +21,6 @@ class vendaController{
 
                 const newRent = new rent({ idUsuario, emailUsuario, idLivro, nomeLivro });
                 await newRent.save();
-                const id = req.params.idLivro;
                 const livroDeletado = await livro.findByIdAndDelete(idLivro);
                 const response = {
                     mensagem: 'Aluguel realizado com sucesso',
@@ -29,7 +28,7 @@ class vendaController{
                         idUsuario: newRent.idUsuario,
                         emailUsuario: newRent.emailUsuario,
                         idLivro: newRent.idLivro,
-                        nomeLivro: newRent.nomeLivro,
+                        nomeLivro: livroDeletado.titulo,
                     },
                     livroAlugado: {
                         id: livroDeletado.id,
@@ -49,4 +48,4 @@ class vendaController{
 
 
 
-export default vendaController;
+export default rentController;

@@ -1,8 +1,17 @@
 import user from "../models/user.js";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
+import validator from "validator";
+
 
 class userControler{
+
+    static validatePassword(password) {
+        if(!validator.isLength(password, {min: 8})){
+            return false;
+        }
+        return true;
+    }
 
     static async listarUsers(req, res) {
         try {
@@ -17,7 +26,9 @@ class userControler{
     static async RegisterUser(req, res) {
         try {
             const { nome, email, senha } = req.body;
-    
+            if(!userControler.validatePassword(senha)){
+                return res.status(401).json({ message: 'A senha precisa ter mais de 8 digitos' });
+            }
             const existingUser = await user.findOne({ email });
             if (existingUser) {
                 return res.status(401).json({ message: 'Email já em uso' });

@@ -5,7 +5,7 @@ const rentSchema = new mongoose.Schema({
     idUsuario: {type: String, required: true},
     emailUsuario : { type: String, required: true },
     idLivro : { type: String, required: true },
-    nomeLivro : { type: String, required: true },
+    nomeLivro : { type: String, required: false},
 })
 
 const rent = mongoose.model("vendas", rentSchema);
