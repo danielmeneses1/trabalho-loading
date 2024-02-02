@@ -57,10 +57,9 @@ class livroControler{
             res.status(500).json({ message: 'error when find book' });
         }
     }
+
     
 }
-
-
 export default livroControler;
 
 

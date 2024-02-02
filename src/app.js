@@ -3,6 +3,7 @@ import livrosRouter from "./routs/RotaLivros.js";
 import usuariosRouter from "./routs/RotaUsuarios.js";
 import conectaNaDatabase from "./config/dbconnect.js";
 import routerVenda from "./routs/RotaVenda.js";
+import rotaPage from "./routs/RotaLivrosPaginados.js";
 const conexao = await conectaNaDatabase();
 
 conexao.on("error", (erro)=>{
@@ -22,6 +23,7 @@ app.use(express.json());
 app.use("/livros", livrosRouter);
 app.use("/usuarios", usuariosRouter);
 app.use("/vendas", routerVenda);
+app.use("/paginacao", rotaPage);
 
 export default app;
 
