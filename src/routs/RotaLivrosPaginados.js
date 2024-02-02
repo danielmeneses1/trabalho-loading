@@ -1,6 +1,6 @@
 import express from 'express';
 const router = express.Router();
-import livro from '../models/livro.js'; 
+import livro from '../models/Livro.js'; 
 
 router.get('/', async (req, res) => {
     const page = req.body.page || 1;

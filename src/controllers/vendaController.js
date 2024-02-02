@@ -1,6 +1,6 @@
 
 import rent from "../models/Rent.js";
-import livro from "../models/livro.js";
+import livro from "../models/Livro.js";
 
 class rentController{
     static async listarAlugueis(req, res) {
