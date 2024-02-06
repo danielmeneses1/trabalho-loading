@@ -48,7 +48,19 @@ class rentController{
                 res.status(500).json({ message: 'Erro ao realizar venda' });
             }
         }
+        static async listarAlugueisPorUsuario(req, res) {
+            try {
+                const { idUsuario } = req.params;
+                const ListaVendas = await rent.find({ idUsuario });
+                res.status(200).json(ListaVendas);
+            } catch (error) {
+                console.error(error);
+                res.status(500).json({ message: 'Erro ao buscar alugueis' });
+            }
+        }
     }
+
+
 
 
 

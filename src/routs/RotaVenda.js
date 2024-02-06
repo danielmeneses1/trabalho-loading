@@ -5,6 +5,7 @@ const routerVenda = Express.Router();
 
 routerVenda.get("/", rentController.listarAlugueis);
 routerVenda.post("/", verificarToken , rentController.RealizarAluguel);
+routerVenda.get("/:idUsuario", rentController.listarAlugueisPorUsuario);
 
 
 export default routerVenda;
