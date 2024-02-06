@@ -2,7 +2,7 @@ import express from "express";
 import livrosRouter from "./routs/RotaLivros.js";
 import usuariosRouter from "./routs/RotaUsuarios.js";
 import conectaNaDatabase from "./config/dbconnect.js";
-import routerVenda from "./routs/RotaVenda.js";
+import routerAluguel from "./routs/RotaAluguel.js";
 import rotaPage from "./routs/RotaLivrosPaginados.js";
 const conexao = await conectaNaDatabase();
 
@@ -22,7 +22,7 @@ app.use(express.json());
 
 app.use("/livros", livrosRouter);
 app.use("/usuarios", usuariosRouter);
-app.use("/vendas", routerVenda);
+app.use("/vendas", routerAluguel);
 app.use("/paginacao", rotaPage);
 
 export default app;
