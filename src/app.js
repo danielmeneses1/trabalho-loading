@@ -22,7 +22,7 @@ app.use(express.json());
 
 app.use("/livros", livrosRouter);
 app.use("/usuarios", usuariosRouter);
-app.use("/vendas", routerAluguel);
+app.use("/alugueis", routerAluguel);
 app.use("/paginacao", rotaPage);
 
 export default app;

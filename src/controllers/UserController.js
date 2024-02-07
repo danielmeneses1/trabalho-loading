@@ -2,7 +2,9 @@ import user from "../models/user.js";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import validator from "validator";
+import dotenv from "dotenv";
 
+const secret = process.env.JWT_SECRET;
 
 class userControler{
 
@@ -63,7 +65,9 @@ class userControler{
             if (!senhaValida) {
                 return res.status(401).json({ message: 'Senha inválida' });
             }
-            const token = jwt.sign({ id: existingUser._id , email : existingUser.email}, "segredo", { expiresIn: '1h' });
+            dotenv.config();
+
+            const token = jwt.sign({ id: existingUser._id , email : existingUser.email}, "segredo" , { expiresIn: '1h' });
             const response = {
                 mensagem: 'Login realizado com sucesso',
                 usuario: {

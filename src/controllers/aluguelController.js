@@ -17,12 +17,12 @@ class rentController{
     static async RealizarAluguel(req, res) {
         try {
             const { idLivro } = req.body;
-    
-            // Verifique se o token está presente no cabeçalho da requisição
             const token = req.headers.authorization.split(' ')[1];
-            
-            // Decodifique o token para obter as informações do usuário
             const decodedToken = Jwt.verify(token, 'segredo');
+    
+            if (decodedToken.exp < Date.now() / 1000) {
+                return res.status(401).json({ message: 'Token expirado' });
+            }
     
             const { id, email } = decodedToken;
     
@@ -62,43 +62,6 @@ class rentController{
             res.status(500).json({ message: 'Erro ao realizar venda' });
         }
     }
-
-    
-        // static async RealizarAluguel(req, res) {
-        //     try {
-        //         const { idUsuario, emailUsuario, idLivro, nomeLivro } = req.body;
-
-        //         const livroDisponivel = await livro.findById(idLivro);
-        //         if (!livroDisponivel) {
-        //             return res.status(404).json({ message: 'Livro não disponível' });
-        //         }
-
-        //         const newRent = new rent({ idUsuario, emailUsuario, idLivro, nomeLivro });
-        //         await newRent.save();
-        //         const livroAlugado = await livro.findByIdAndDelete(idLivro);
-        //         const response = {
-        //             mensagem: 'Aluguel realizado com sucesso',
-        //             AlugadoPor: {
-        //                 idUsuario: newRent.idUsuario,
-        //                 emailUsuario: newRent.emailUsuario,
-        //                 idLivro: newRent.idLivro,
-        //                 nomeLivro: livroAlugado.titulo,
-        //             },
-        //             livroAlugado: {
-        //                 id: livroAlugado.id,
-        //                 titulo: livroAlugado.titulo,
-        //                 editora: livroAlugado.editora,
-        //                 preco: livroAlugado.preco,
-        //             }
-        //         };
-
-        //         res.status(201).json(response);
-        //     } catch (error) {
-        //         console.error(error);
-        //         res.status(500).json({ message: 'Erro ao realizar venda' });
-        //     }
-        // }
-
 
         static async listarAlugueisPorUsuario(req, res) {
             try {
