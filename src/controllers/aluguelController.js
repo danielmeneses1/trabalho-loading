@@ -67,10 +67,6 @@ class rentController{
             try {
                 const { idUsuario } = req.params;
                 const ListaVendas = await rent.find({ idUsuario });
-                const response = {
-                    mensagem: 'Alugueis realizados pelo usuário',
-                    Alugueis: ListaVendas,
-                };
                 res.status(200).json(ListaVendas);
             } catch (error) {
                 console.error(error);
